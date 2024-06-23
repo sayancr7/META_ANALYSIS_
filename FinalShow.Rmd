@@ -1,0 +1,50 @@
+---
+title: "Meta Analysis"
+output: html_document
+date: "2024-05-16"
+---
+
+
+<!-- Packages required for Mapping: -->
+```{r}
+library(ggplot2)
+library(maps)
+library(mapdata)
+```
+<!-- Dataset for the Mapping: -->
+```{r}
+data <- data.frame(
+  city = c("Netherland","India","China","Bangladesh","Japan","France","Iran","Italy","Pakistan","Washington","Korea","Mongolia","Thailand","Vietnam","Malaysia","South Africa","Egypt","Ghana","Europe","California"),
+  lat = c(52.1326,20.5937,35.8617,23.6850,36.2048,46.2276,32.4279,41.8719,30.3753,47.7511,35.9078,46.8625,15.8700,14.0583,4.2105,30.5595,26.8206,7.9465,54.5260,36.7783),
+  long = c(5.2913,78.9629,104.1954,90.3563,138.2529,2.2137,53.6880,12.5674,69.3451,-120.7401,127.7669,103.8467,100.9925,108.2772,101.9758,22.9375,30.8025,-1.0232,15.2551,-119.4179)
+)
+```
+```{r}
+# World map data
+world <- map_data("world")
+```
+```{r}
+# Plot map
+ggplot() +
+  geom_polygon(data = world, aes(x = long, y = lat, group = group), 
+               fill = "white", color = "black") +
+  geom_point(data = data, aes(x = long, y = lat), color = "red", size = 3) +
+  labs(title = "Global Map with Country") +
+  theme_minimal()
+```
+```{r}
+# Forest plot
+library(meta)
+getwd()
+setwd("C:\\Users\\sayan\\OneDrive\\Desktop\\PROJECT DETAILS")
+f<-read.csv("forestplot.csv")
+f
+y=metabin(childandteenager,totalcat,adultandold,totalaao,studlab=Refference,data=f,sm="OR")
+forest(y)
+forest(y,leftcols = c("studlab","effect"))
+forest(y,leftcols = c("studlab","effect"),rightcols = c("ci","w.random"))
+
+
+
+```
+
